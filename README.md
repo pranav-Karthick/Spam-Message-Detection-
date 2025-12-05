@@ -127,7 +127,7 @@ Converts raw score into probability
 
 σ(z)=1/1+e^−z
 
-	​
+	​pip install numpy pandas scikit-learn
 ✔ Softmax
 
 Probability distribution for two classes
