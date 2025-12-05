@@ -1,154 +1,133 @@
-📧 Spam Classification Using Logistic Regression
+📧 SMS Spam Classification Using Logistic Regression
+This project demonstrates how to build a binary text classification model that identifies SMS messages as spam or not spam.
+The project uses Logistic Regression, TF-IDF vectorization, and the Sigmoid activation function to calculate the final probability of a message being spam.
 
-A machine learning project that classifies SMS messages as spam or not spam using Logistic Regression, Sigmoid function, and Softmax probability distribution.
-The model is trained on the spam.csv dataset and predicts spam status for 10 random messages selected from the dataset.
+The goal is to show how logistic regression works at a mathematical level by manually applying the sigmoid function to model outputs.
+The model also predicts 10 random messages from the dataset and displays their spam probability and classification result.
 
-📝 Project Overview
+📝 About the Project
 
-This project demonstrates:
+This project focuses on text classification using machine learning.
+Given an SMS message, the model predicts whether the message is:
 
-Text preprocessing using TF-IDF Vectorizer
+spam
+not spam
 
-Training a Logistic Regression classifier
+The project uses:
+    Logistic Regression
+    TF-IDF vectorization
+    Sigmoid activation (manually applied)
+    10 random messages prediction
+    This project is ideal for students learning:
+    NLP basics
+    Logistic regression internals
+    Activation functions
+    Preprocessing text for ML
+    Real-world classification problems
 
-Applying Sigmoid function for binary probability
+📂 Dataset Details
 
-Applying Softmax function for probability distribution
-
-Predicting spam / not spam for 10 randomly selected messages
-
-Displaying prediction probabilities clearly
-
-This project is implemented in Python (Google Colab / Jupyter Notebook).
-
-📂 Dataset
-
-The project uses the standard spam.csv SMS spam collection dataset containing:
+The dataset used is the Spam SMS Collection Dataset (spam.csv) that includes:
 
 Column	Description
-v1	Label (ham/spam)
+v1	Label: ham (not spam) or spam
 v2	SMS message text
+Cleaning Performed:
 
-During preprocessing:
+✔ Only required columns kept
+✔ Columns renamed to label and message
+✔ Labels mapped → ham = 0, spam = 1
+✔ Empty or irrelevant columns removed
 
-ham → not spam
-
-spam → spam
-
-Extra columns are removed
-
-🔧 Tech Stack
+🛠 Technologies Used
 
 Python
-
 Pandas
-
 NumPy
-
 Scikit-Learn
-
 Logistic Regression
-
-Train–Test Split
-
 TF-IDF Vectorizer
 
-🚀 How It Works
-🔹 1. Load and clean the dataset
+🔄 Project Workflow
 
-Only required columns are kept and labels are converted.
+Load dataset
+Preprocess text
+Convert text to TF-IDF features
+Split dataset: 80% train, 20% test
+Train Logistic Regression model
+Manually apply sigmoid function
+Predict spam/not spam for 10 random messages
+Display probabilities + final label
 
-🔹 2. Train–Test Split
+📘 Understanding the Sigmoid Function
+Logistic Regression produces a raw output value called logit or decision score.
 
-80% for training, 20% for testing.
+The sigmoid function converts this raw score into a probability:
 
-🔹 3. TF-IDF Vectorization
+[
 
-Converts text into numerical feature vectors.
+\sigma(z) = \frac{1}{1 + e^{-z}}
+]
 
-🔹 4. Train Logistic Regression
+Where:
 
-Model learns to classify spam vs not spam.
+z = model output
 
-🔹 5. Select 10 random samples
+σ(z) = probability that the message is spam
 
-Random messages from the dataset are selected for testing.
+Classification Decision:
+Sigmoid  Output	Prediction
+> 0.5	 spam
+≤ 0.5	 not spam
+🤖 Model Training Process
+🔹 TF-IDF Vectorization
 
-🔹 6. Apply Sigmoid
+Converts text into numerical vectors based on word importance.
 
-Used to calculate the probability that a message is spam.
+🔹 Logistic Regression
 
-🔹 7. Apply Softmax
+Learns the relationship between message features and their labels.
 
-Converts scores into a probability distribution:
+🔹 Sigmoid Activation
 
-Probability of spam
+Manually applied to show how logistic regression actually converts output to probability.
 
-Probability of not spam
+🔟 10 Random Message Prediction
 
-🔹 8. Predict Labels
+The model selects 10 random messages from the dataset and predicts:
+Spam probability (sigmoid output)
+Final classification (spam/not spam)
+This demonstrates real-world prediction behavior.
 
-If sigmoid_prob > 0.5 → spam
-Else → not spam
+📊 Project Output
 
-📌 Code Snippet (Main Prediction Part)
-sample_df = df.sample(10, random_state=42).copy()
-sample_tfidf = vectorizer.transform(sample_df['message'])
+The final output will look like:
+
+message	sigmoid_prob_spam	predicted_label
+"Congratulations! You won…"	0.928	spam
+"Ok I will call later"	0.071	not spam
+...	...	...
+
+📜 Code Overview
+The core part of the prediction:
 
 raw_scores = model.decision_function(sample_tfidf)
 sigmoid_scores = sigmoid(raw_scores)
-softmax_scores = np.array([softmax([1-s, s]) for s in sigmoid_scores])
 
 sample_df['predicted_label'] = np.where(
-    sigmoid_scores > 0.5, 'spam', 'not spam'
+    sigmoid_scores > 0.5,
+    'spam',
+    'not spam'
 )
 
-📊 Output
+🚀 Future Enhancements
 
-Final output contains:
+Add Softmax-based probability distribution
 
-message	sigmoid_prob_spam	softmax_spam	predicted_label
-"Congratulations! You won…"	0.92	0.95	spam
-"Ok I'll call later"	0.08	0.04	not spam
-📁 Project Files
-File	Description
-spam.csv	Dataset file
-notebook.ipynb	Full Google Colab/Jupyter code
-README.md	Project documentation
-🧠 Concepts Used
-✔ Logistic Regression
+Add confusion matrix and accuracy score
 
-Used for binary classification (spam/not spam)
+Deploy as a web app using Streamlit or Gradio
 
-✔ Sigmoid Function
+Add stemming/lemmatization
 
-Converts raw score into probability
-
-
-σ(z)=1/1+e^−z
-
-	​pip install numpy pandas scikit-learn
-✔ Softmax
-
-Probability distribution for two classes
-
-✔ TF-IDF
-
-Transforms text into machine-readable features
-
-📦 Installation
-pip install numpy pandas scikit-learn
-
-▶️ Run the Project
-
-Open the notebook in Google Colab:
-
-Upload spam.csv
-
-Run all cells
-
-View predictions for 10 random messages
-
-🏁 Conclusion
-
-This project successfully classifies SMS messages using logistic regression and demonstrates how sigmoid and softmax functions can be used to compute probabilities for classification tasks.
+Use more advanced models (SVM, Random Forest, Naive Bayes, LSTM)
